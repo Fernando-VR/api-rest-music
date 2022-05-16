@@ -1,0 +1,22 @@
+{
+  "name": "practica3",
+  "version": "1.0.0",
+  "description": "api-rest of a library of music using express and mongo-db",
+  "main": "app.js",
+  "scripts": {
+    "dev": "DEBUG=app:* nodemon app"
+  },
+  "author": "FernandoVR",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "express": "^4.18.1",
+    "http-errors": "^2.0.0",
+    "joi": "^17.6.0",
+    "mongoose": "^6.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
