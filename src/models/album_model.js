@@ -18,7 +18,7 @@ const albumSchema = new mongoose.Schema({
         required: true
     },
     songs: {
-        type: [ ]
+        type: [ String ]
     }
 });
 

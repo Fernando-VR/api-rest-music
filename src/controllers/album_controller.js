@@ -21,13 +21,11 @@ module.exports.AlbumController = {
         let result = AlbumService.getById( id );
         result
             .then( album => {
-                album[0] 
-                    ? Response.success(res, 200, 'Album', album)
-                    : Response.error(res, new createError.NotFound());
+                Response.success(res, 200, 'Album', album);
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     },
     createAlbum: (req, res) => {
@@ -75,7 +73,7 @@ module.exports.AlbumController = {
                 })
                 .catch( error => {
                     debug(error);
-                    Response.error(res);
+                    Response.error(res, error);
                 })
         }
         else {
@@ -88,13 +86,11 @@ module.exports.AlbumController = {
         const result = AlbumService.deleteAlbum( id );
         result
             .then( album => {
-                album
-                    ? Response.success(res, 200, 'Album deleted', album)
-                    : Response.error(res, new createError.NotFound);
+                Response.success(res, 200, 'Album deleted', album)
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     }
 }

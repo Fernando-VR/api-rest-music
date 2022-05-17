@@ -21,13 +21,11 @@ module.exports.SongController = {
         let result = SongService.getById( id );
         result
             .then( song => {
-                song[0] 
-                    ? Response.success(res, 200, 'Song', song)
-                    : Response.error(res, new createError.NotFound());
+                Response.success(res, 200, 'Song', song);
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     },
     createSong: (req, res) => {
@@ -67,13 +65,11 @@ module.exports.SongController = {
             let result = SongService.updateSong( id, value );
             result
                 .then( song => {
-                    song 
-                        ? Response.success(res, 200, 'Song modified', song)
-                        : Response.error(res, new createError.NotFound());
+                    Response.success(res, 200, 'Song modified', song)
                 })
                 .catch( error => {
                     debug(error);
-                    Response.error(res);
+                    Response.error(res, error);
                 })
         }
         else {
@@ -92,7 +88,7 @@ module.exports.SongController = {
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     }
 }

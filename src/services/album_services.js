@@ -1,6 +1,7 @@
 const Album = require('../models/album_model');
 const Joi = require('joi');
 const debug = require('debug')('app:module-album-services');
+const createError = require('http-errors');
 
 const schema = Joi.object({
     title: Joi.string()
@@ -23,6 +24,8 @@ const getAlbums = async () => {
 
 const getById = async ( id ) => {
     let album = await Album.find( { "_id": id });
+    if ( !album[0] )
+        throw new createError(400, `Album ${id} doesn't exist`);
     return album;
 };
 
@@ -45,11 +48,15 @@ const updateAlbum = async ( id, { title, label, gender, year } ) => {
             year
         }
     }, { new: true });
+    if ( !album )
+        throw new createError(400, `Album ${id} doesn't exist`);
     return album;
 }
 
 const deleteAlbum = async ( id ) => {
     let album = await Album.findOneAndDelete({ "_id" : id });
+    if ( !album )
+        throw new createError(400, `Album ${id} doesn't exist`);
     return album;
 }
 

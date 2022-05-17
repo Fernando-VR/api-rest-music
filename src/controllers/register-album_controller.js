@@ -6,7 +6,16 @@ const { Response } = require('../common/response');
 
 module.exports.RegisterAlbumController = {
     getTest: (req, res) => {
-        Response.success(res, 200, 'GET register-album');
+        let { params : { id_singer }} = req;
+        let result = RegisterAlbumService.getAlbumsSinger( id_singer );
+        result
+            .then( albums => {
+                Response.success(res, 201, `Singer's ${id_singer} Albums`, albums);
+            })
+            .catch( error => {
+                debug(error);
+                Response.error(res, error);
+            })
     },
     addAlbum: (req, res) => {
         let { params: { id_singer, id_album } } = req;
@@ -17,7 +26,7 @@ module.exports.RegisterAlbumController = {
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             })
     },
     removeAlbum: (req, res) => {
@@ -29,7 +38,7 @@ module.exports.RegisterAlbumController = {
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             })
     }
 }

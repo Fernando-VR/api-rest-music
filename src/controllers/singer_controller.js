@@ -21,13 +21,11 @@ module.exports.SingerController = {
         let result = SingerService.getById( id );
         result
             .then( singer => {
-                singer[0] 
-                    ? Response.success(res, 200, 'Singer', singer)
-                    : Response.error(res, new createError.NotFound());
+                Response.success(res, 200, 'Singer', singer);
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     },
     createSinger: (req, res) => {
@@ -67,13 +65,11 @@ module.exports.SingerController = {
             let result = SingerService.updateSinger( id, value );
             result
                 .then( singer => {
-                    singer 
-                        ? Response.success(res, 200, 'Singer modified', singer)
-                        : Response.error(res, new createError.NotFound());
+                    Response.success(res, 200, 'Singer modified', singer);
                 })
                 .catch( error => {
                     debug(error);
-                    Response.error(res);
+                    Response.error(res, error);
                 })
         }
         else {
@@ -86,13 +82,11 @@ module.exports.SingerController = {
         const result = SingerService.deleteSinger( id );
         result
             .then( singer => {
-                singer
-                    ? Response.success(res, 200, 'Singer deleted', singer)
-                    : Response.error(res, new createError.NotFound);
+                Response.success(res, 200, 'Singer deleted', singer);
             })
             .catch( error => {
                 debug( error );
-                Response.error(res);
+                Response.error(res, error);
             });
     }
 }

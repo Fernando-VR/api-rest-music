@@ -1,6 +1,7 @@
 const Song = require('../models/song_model');
 const Joi = require('joi');
 const debug = require('debug')('app:module-song-services');
+const createError = require('http-errors')
 
 const schema = Joi.object({
     title: Joi.string()
@@ -21,6 +22,8 @@ const getSongs = async () => {
 
 const getById = async ( id ) => {
     let song = await Song.find( { "_id": id });
+    if ( !song[0] )
+        throw new createError(400, `Song ${id} doesn't exist`);
     return song;
 };
 
@@ -41,11 +44,15 @@ const updateSong = async ( id, { title, track_number, length } ) => {
             length
         }
     }, { new: true });
+    if ( !song )
+        throw new createError(400, `Song ${id} doesn't exist`);
     return song;
 }
 
 const deleteSong = async ( id ) => {
     let song = await Song.findOneAndDelete({ "_id" : id });
+    if ( !song )
+        throw new createError(400, `Song ${id} doesn't exist`);
     return song;
 }
 
